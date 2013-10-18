@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Trade Monkey Contributors</title>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+<meta charset="utf-8">
+
+
+
+<style>
+#map,  nav {
+        height: auto;
+        width: auto;
+        border: 1px solid red;
+        min-height: 500px;
+}
+
+
+
+header,footer {
+        width: auto;
+        border: 1px solid red;
+}
+
+header {
+        margin-bottom: 1px;
+}
+
+footer {
+        clear: both;
+        margin-top: 0px;
+}
+
+aside
+{
+        width: 150px;
+        border: 1px solid blue;
+        min-height: 400px;
+}
+
+nav 
+{
+        height: 100%;
+        width: 150px;
+        border: 1px solid blue;
+        min-height: 500px;
+}
+
+article {
+        border: 1px solid black;
+        width: auto;
+        margin-left: 150px;
+        margin-right: 0px;
+        min-height: 400px;
+}
+
+
+nav {
+        float: left;
+}
+
+aside {
+        float: right;
+}
+</style>
+
+
+
+<!-- 
+   Just a test using google
+-->
+
+
+
+<script
+        src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+<script src="http://code.jquery.com/jquery-2.0.2.js"></script>
+
+
+<script>  // ============  Begin Script ============ 
+
+
+var cityLookupA = 
+{
+"mansfield, ma":{"index":0,"cityString":"Mansfield, MA","lat":42.03345650000001,"lon":-71.21905779999997,"formatted_address":"Mansfield, MA, USA"},
+"adelaide":{"index":1,"cityString":"Adelaide ","lat":-34.92862119999999,"lon":138.5999594,"formatted_address":"Adelaide SA, Australia"},
+"melbourne":{"index":3,"cityString":"Melbourne ","lat":-37.814107,"lon":144.96327999999994,"formatted_address":"Melbourne VIC, Australia"},
+"fair park":{"index":5,"cityString":"Fair Park","lat":32.7793216,"lon":-96.74404670000001,"formatted_address":"South Dallas/Fair Park, Dallas, TX, USA"},"westbourne park":{"index":7,"cityString":"Westbourne Park ","lat":51.52111,"lon":-0.20104000000003452,"formatted_address":"Westbourne Park, Royal Borough of Kensington and Chelsea, London W11, UK"},"wynn vale":{"index":10,"cityString":"Wynn Vale","lat":-34.7990578,"lon":138.6861202,"formatted_address":"Wynn Vale SA 5127, Australia"},"wayville":{"index":11,"cityString":"Wayville","lat":-34.9418098,"lon":138.59254880000003,"formatted_address":"Wayville SA 5034, Australia"},"darwin":{"index":12,"cityString":"Darwin ","lat":-12.4628271,"lon":130.84177720000002,"formatted_address":"Darwin NT, Australia"},"mitchell park":{"index":13,"cityString":"Mitchell Park","lat":-35.0105401,"lon":138.5623064,"formatted_address":"Mitchell Park SA 5043, Australia"},"sydney":{"index":14,"cityString":"Sydney","lat":-33.8674869,"lon":151.20699020000006,"formatted_address":"Sydney NSW, Australia"},"angouleme":{"index":16,"cityString":"Angouleme","lat":45.648377,"lon":0.15623690000006718,"formatted_address":"Angoul�me, France"},"fritzlar":{"index":17,"cityString":"Fritzlar","lat":51.1330809,"lon":9.274264099999982,"formatted_address":"Fritzlar, Germany"},"mcmurdo station":{"index":18,"cityString":"McMurdo Station ","lat":-77.85,"lon":166.66666669999995,"formatted_address":"McMurdo Station, Antarctica"},"rabat":{"index":19,"cityString":"Rabat","lat":34.015049,"lon":-6.832719999999995,"formatted_address":"Rabat, Morocco"},"lelystad":{"index":20,"cityString":"Lelystad","lat":52.51853699999999,"lon":5.471421999999961,"formatted_address":"Lelystad, The Netherlands"},"chiang mai":{"index":21,"cityString":"Chiang Mai","lat":18.790977,"lon":98.96077560000003,"formatted_address":"Chiang Mai, Thailand"},"berkley":{"index":25,"cityString":"Berkley","lat":37.8715926,"lon":-122.27274699999998,"formatted_address":"Berkeley, CA, USA"},"dubia":{"index":26,"cityString":"Dubia ","lat":25.271139,"lon":55.30748500000004,"formatted_address":"Dubai - United Arab Emirates"},"london":{"index":27,"cityString":"London","lat":51.51121389999999,"lon":-0.11982439999997041,"formatted_address":"London, UK"},"oxford":{"index":28,"cityString":"Oxford","lat":51.7520209,"lon":-1.2577263000000585,"formatted_address":"Oxford, UK"},"davis":{"index":29,"cityString":"Davis","lat":38.5449065,"lon":-121.7405167,"formatted_address":"Davis, CA, USA"},"sacramento":{"index":30,"cityString":"Sacramento ","lat":38.5815719,"lon":-121.49439960000001,"formatted_address":"Sacramento, CA, USA"},"walnut creek":{"index":32,"cityString":"Walnut Creek","lat":37.9100783,"lon":-122.06518189999997,"formatted_address":"Walnut Creek, CA, USA"},"los angeles":{"index":35,"cityString":"Los Angeles ","lat":34.0522342,"lon":-118.2436849,"formatted_address":"Los Angeles, CA, USA"},"mill valley":{"index":33,"cityString":"Mill Valley ","lat":37.9060368,"lon":-122.54497630000003,"formatted_address":"Mill Valley, CA, USA"},"santa ana":{"index":34,"cityString":"Santa Ana","lat":33.7455731,"lon":-117.86783379999997,"formatted_address":"Santa Ana, CA, USA"},"carmichael":{"index":37,"cityString":"Carmichael","lat":38.617127,"lon":-121.3282843,"formatted_address":"Carmichael, CA, USA"},"san clemente":{"index":38,"cityString":"San Clemente","lat":33.4269728,"lon":-117.61199249999999,"formatted_address":"San Clemente, CA, USA"},"manchester":{"index":39,"cityString":"Manchester","lat":53.479324,"lon":-2.248485100000039,"formatted_address":"Manchester, UK"},"san antonio":{"index":43,"cityString":"San Antonio","lat":29.4241219,"lon":-98.49362819999999,"formatted_address":"San Antonio, TX, USA"},"shawnee":{"index":40,"cityString":"Shawnee","lat":39.02284849999999,"lon":-94.71518650000002,"formatted_address":"Shawnee, KS, USA"},"rockland":{"index":44,"cityString":"Rockland","lat":44.1036914,"lon":-69.1089293,"formatted_address":"Rockland, ME, USA"},"campbell":{"index":41,"cityString":"Campbell","lat":37.2871651,"lon":-121.9499568,"formatted_address":"Campbell, CA, USA"},"san francisco":{"index":42,"cityString":"San Francisco","lat":37.7749295,"lon":-122.41941550000001,"formatted_address":"San Francisco, CA, USA"},"novato":{"index":48,"cityString":"Novato","lat":38.1074198,"lon":-122.56970319999999,"formatted_address":"Novato, CA, USA"},"lafayette":{"index":49,"cityString":"Lafayette","lat":30.2240897,"lon":-92.01984270000003,"formatted_address":"Lafayette, LA, USA"},"jamaica plain":{"index":51,"cityString":"Jamaica Plain","lat":42.3097365,"lon":-71.11514310000001,"formatted_address":"Jamaica Plain, Boston, MA, USA"},"harrisonburg":{"index":56,"cityString":"Harrisonburg","lat":38.4495688,"lon":-78.86891550000001,"formatted_address":"Harrisonburg, VA, USA"},"livermore":{"index":54,"cityString":"Livermore","lat":37.6818745,"lon":-121.76800880000002,"formatted_address":"Livermore, CA, USA"},"san ramon":{"index":50,"cityString":"San Ramon","lat":37.7799273,"lon":-121.97801529999998,"formatted_address":"San Ramon, CA, USA"},"hadley":{"index":52,"cityString":"Hadley","lat":42.3417565,"lon":-72.58842220000002,"formatted_address":"Hadley, MA, USA"},"amherst":{"index":59,"cityString":"Amherst","lat":42.366667,"lon":-72.51666699999998,"formatted_address":"Amherst, MA, USA"},"glendale":{"index":66,"cityString":"Glendale","lat":34.1425078,"lon":-118.25507500000003,"formatted_address":"Glendale, CA, USA"},"holliston":{"index":60,"cityString":"Holliston","lat":42.20009659999999,"lon":-71.42450489999999,"formatted_address":"Holliston, MA, USA"},"hideout":{"index":63,"cityString":"Hideout ","lat":40.6475285,"lon":-111.4025891,"formatted_address":"Hideout, UT, USA"},"deerfield":{"index":64,"cityString":"Deerfield","lat":42.1711365,"lon":-87.84451189999999,"formatted_address":"Deerfield, IL, USA"},"claremont":{"index":65,"cityString":"Claremont","lat":34.0966764,"lon":-117.71977850000002,"formatted_address":"Claremont, CA, USA"},"solvang":{"index":77,"cityString":"Solvang","lat":34.5958201,"lon":-120.13764809999998,"formatted_address":"Solvang, CA, USA"},"escondido":{"index":76,"cityString":"Escondido","lat":33.1192068,"lon":-117.08642099999997,"formatted_address":"Escondido, CA, USA"},"redwood city":{"index":73,"cityString":"Redwood City","lat":37.48521520000001,"lon":-122.23635480000002,"formatted_address":"Redwood City, CA, USA"},"west olive":{"index":74,"cityString":"West Olive","lat":42.9214101,"lon":-86.14643519999998,"formatted_address":"West Olive, MI 49460, USA"},"rancho cordova":{"index":70,"cityString":"Rancho Cordova","lat":38.5890723,"lon":-121.302728,"formatted_address":"Rancho Cordova, CA, USA"},"moraga":{"index":78,"cityString":"Moraga","lat":37.8349263,"lon":-122.12968710000001,"formatted_address":"Moraga, CA, USA"},"milton":{"index":79,"cityString":"Milton","lat":43.5182991,"lon":-79.8774042,"formatted_address":"Milton, ON, Canada"},"sacramento, ca":{"index":82,"cityString":"Sacramento, CA","lat":38.5815719,"lon":-121.49439960000001,"formatted_address":"Sacramento, CA, USA"},"thousand oaks, ca":{"index":85,"cityString":"Thousand Oaks, CA ","lat":34.1705609,"lon":-118.83759370000001,"formatted_address":"Thousand Oaks, CA, USA"},"st. pete beach, fl":{"index":83,"cityString":"St. Pete Beach, FL","lat":27.7247222,"lon":-82.74194439999997,"formatted_address":"St. Pete Beach, FL, USA"},"walnut creek, ca":{"index":80,"cityString":"Walnut Creek, CA ","lat":37.9100783,"lon":-122.06518189999997,"formatted_address":"Walnut Creek, CA, USA"},"san barbara, ca":{"index":81,"cityString":"San Barbara, CA ","lat":34.4208305,"lon":-119.69819010000003,"formatted_address":"Santa Barbara, CA, USA"},"brooklyn, ny":{"index":87,"cityString":"Brooklyn, NY","lat":40.65,"lon":-73.94999999999999,"formatted_address":"Brooklyn, NY, USA"},"charlotte, nc":{"index":88,"cityString":"Charlotte, NC","lat":35.2270869,"lon":-80.84312669999997,"formatted_address":"Charlotte, NC, USA"},"boston, ma":{"index":89,"cityString":"Boston, MA","lat":42.3584308,"lon":-71.0597732,"formatted_address":"Boston, MA, USA"},"cambridge, ma":{"index":90,"cityString":"Cambridge, MA","lat":42.3736158,"lon":-71.1097335,"formatted_address":"Cambridge, MA, USA"},"stockton, ca":{"index":91,"cityString":"Stockton, CA","lat":37.9577016,"lon":-121.29077960000001,"formatted_address":"Stockton, CA, USA"},"amherst, ma":{"index":92,"cityString":"Amherst, MA","lat":42.366667,"lon":-72.51666699999998,"formatted_address":"Amherst, MA, USA"},"huntington beach, ca":{"index":93,"cityString":"Huntington Beach, CA","lat":33.660297,"lon":-117.99922650000002,"formatted_address":"Huntington Beach, CA, USA"},"fremont, ca":{"index":94,"cityString":"Fremont, CA","lat":37.5482697,"lon":-121.98857190000001,"formatted_address":"Fremont, CA, USA"},"gilroy, ca":{"index":95,"cityString":"Gilroy, CA","lat":37.0057816,"lon":-121.5682751,"formatted_address":"Gilroy, CA 95020, USA"},"rancho cordova, ca":{"index":96,"cityString":"Rancho Cordova, CA","lat":38.5890723,"lon":-121.302728,"formatted_address":"Rancho Cordova, CA, USA"},"mahopac, ny":{"index":99,"cityString":"Mahopac, NY","lat":41.372316,"lon":-73.73346500000002,"formatted_address":"Mahopac, NY, USA"},"ashland, or":{"index":100,"cityString":"Ashland, OR","lat":42.1945758,"lon":-122.70947669999998,"formatted_address":"Ashland, OR 97520, USA"},"brookline, ma":{"index":103,"cityString":"Brookline, MA","lat":42.33176419999999,"lon":-71.12116349999997,"formatted_address":"Brookline, MA, USA"},"la quinta, ca":{"index":104,"cityString":"La Quinta, CA","lat":33.6633573,"lon":-116.31000949999998,"formatted_address":"La Quinta, CA, USA"},"oakland, ca":{"index":101,"cityString":"Oakland, CA","lat":37.8043637,"lon":-122.2711137,"formatted_address":"Oakland, CA, USA"},"milton, ma":{"index":102,"cityString":"Milton, MA","lat":42.2495321,"lon":-71.06616529999997,"formatted_address":"Milton, MA, USA"},"san francisco, ca":{"index":105,"cityString":"San Francisco, CA","lat":37.7749295,"lon":-122.41941550000001,"formatted_address":"San Francisco, CA, USA"},"modesto, ca":{"index":106,"cityString":"Modesto, CA","lat":37.63909719999999,"lon":-120.99687819999997,"formatted_address":"Modesto, CA, USA"},"claremont,ca":{"index":109,"cityString":"Claremont,CA","lat":34.0966764,"lon":-117.71977850000002,"formatted_address":"Claremont, CA, USA"},"rancho santa margarita, ca":{"index":108,"cityString":"Rancho Santa Margarita, CA","lat":33.640855,"lon":-117.60310400000003,"formatted_address":"Rancho Santa Margarita, CA, USA"},"elk grove, ca":{"index":115,"cityString":"Elk Grove, CA","lat":38.4087993,"lon":-121.37161779999997,"formatted_address":"Elk Grove, CA, USA"},"santa ana, ca":{"index":110,"cityString":"Santa Ana, CA","lat":33.7455731,"lon":-117.86783379999997,"formatted_address":"Santa Ana, CA, USA"},"schaumburg,il":{"index":114,"cityString":"Schaumburg,Il","lat":42.0333607,"lon":-88.0834059,"formatted_address":"Schaumburg, IL, USA"},"west haverstraw, ny":{"index":116,"cityString":"West Haverstraw, NY","lat":41.2095389,"lon":-73.98541769999997,"formatted_address":"West Haverstraw, NY, USA"},"santa cruz, ca":{"index":111,"cityString":"Santa Cruz, CA","lat":36.9741171,"lon":-122.03079630000002,"formatted_address":"Santa Cruz, CA, USA"},"indianapolis, in":{"index":117,"cityString":"Indianapolis, IN","lat":39.768403,"lon":-86.15806800000001,"formatted_address":"Indianapolis, IN, USA"},"bridgewater, ma":{"index":118,"cityString":"Bridgewater, MA","lat":41.9903519,"lon":-70.97505409999997,"formatted_address":"Bridgewater, MA, USA"},"irvine, ca":{"index":121,"cityString":"Irvine, CA","lat":33.6839473,"lon":-117.79469419999998,"formatted_address":"Irvine, CA, USA"},"portland, or":{"index":129,"cityString":"Portland, OR","lat":45.5234515,"lon":-122.6762071,"formatted_address":"Portland, OR, USA"},"el dorado hills, ca":{"index":127,"cityString":"El Dorado Hills, CA","lat":38.6857367,"lon":-121.08216700000003,"formatted_address":"El Dorado Hills, CA, USA"},"mountian view, ca":{"index":125,"cityString":"Mountian View, CA","lat":37.3860517,"lon":-122.0838511,"formatted_address":"Mountain View, CA, USA"},"san diego, ca":{"index":131,"cityString":"San Diego, CA","lat":32.7153292,"lon":-117.15725509999999,"formatted_address":"San Diego, CA, USA"},"santa barbara":{"index":139,"cityString":"Santa Barbara","lat":34.4208305,"lon":-119.69819010000003,"formatted_address":"Santa Barbara, CA, USA"},"norwell":{"index":138,"cityString":"Norwell","lat":42.1615157,"lon":-70.79278320000003,"formatted_address":"Norwell, MA, USA"},"bedford hills":{"index":133,"cityString":"Bedford Hills","lat":41.2362191,"lon":-73.70085510000001,"formatted_address":"Bedford Hills, NY, USA"},"dutch harbor":{"index":135,"cityString":"Dutch Harbor ","lat":53.88381039999999,"lon":-166.5520515,"formatted_address":"Dutch Harbor, Unalaska, AK 99692, USA"},"san diego":{"index":146,"cityString":"San Diego ","lat":32.7153292,"lon":-117.15725509999999,"formatted_address":"San Diego, CA, USA"},"macungie":{"index":144,"cityString":"Macungie","lat":40.51593039999999,"lon":-75.5551858,"formatted_address":"Macungie, PA, USA"},"oakland":{"index":143,"cityString":"Oakland","lat":37.8043637,"lon":-122.2711137,"formatted_address":"Oakland, CA, USA"},"santa clara":{"index":145,"cityString":"Santa Clara","lat":37.3541079,"lon":-121.95523559999998,"formatted_address":"Santa Clara, CA, USA"},"burlington":{"index":141,"cityString":"Burlington","lat":44.4758825,"lon":-73.21207199999998,"formatted_address":"Burlington, VT, USA"},"talent":{"index":147,"cityString":"Talent","lat":42.2456844,"lon":-122.78864620000002,"formatted_address":"Talent, OR, USA"},"cambridge":{"index":148,"cityString":"Cambridge","lat":42.3736158,"lon":-71.1097335,"formatted_address":"Cambridge, MA, USA"},"el dorado hills":{"index":149,"cityString":"El Dorado Hills","lat":38.6857367,"lon":-121.08216700000003,"formatted_address":"El Dorado Hills, CA, USA"},"fair oaks, ca":{"index":156,"cityString":"Fair Oaks, CA","lat":38.6446264,"lon":-121.27217180000002,"formatted_address":"Fair Oaks, CA, USA"}
+};
+
+
+
+// can optimize it by strinifying the calculated dictionaries:
+//       cityLookupB, cityBins 
+//  
+
+// need to look up the formatted_city from cityLookupA, then add name to the bin
+var donorRecords = 
+{
+  1:  { id: 1, name: 'Lauren A', city: 'Mansfield, MA' }, 
+  2:  { id: 2, name: 'Stewart L', city: 'Adelaide ' }, 
+  3:  { id: 3, name: 'Oliver R', city: 'Adelaide ' }, 
+  4:  { id: 4, name: 'Anika A', city: 'Melbourne ' }, 
+  5:  { id: 5, name: 'Nancy V', city: 'Adelaide ' }, 
+  6:  { id: 6, name: 'Brett R', city: 'Fair Park' }, 
+  7:  { id: 7, name: 'Danny M', city: 'Melbourne ' }
+};
+
+
+// var ascii = /^[ -~]+$/;  if ( !ascii.test( str ) ) {
+
+function AddObjectNoDupes(dictObj, key, obj) {
+
+    // trim the key 
+    key = $.trim(key);
+
+    // to_upper?
+
+    if (!(key in dictObj)) {
+        dictObj[key] = obj;
+    } else {
+        console.log("duplicate omitted: " + key);
+    }
+
+}
+
+function filterStringAscii(inString) {
+
+    var outString = "";
+
+    for (i=0; i < inString.length; i++) {
+
+      var ch = inString.charAt(i);
+
+      if (ch.which !== 0 && ch.charCode !== 0) {
+        outString = outString + ch;
+      }
+    }
+    return outString;
+}
+
+
+
+var cityLookupB = {};
+
+      // important check that this is objects own property, not from prototype prop inherited
+      // if(obj.hasOwnProperty(prop)){ alert(prop + " = " + obj[prop]);
+
+// create list of cities keyed by the one and only formatted_address string
+for (var key in cityLookupA ) {
+
+   var cityRecord = cityLookupA[key];
+
+   var newCityKey = cityRecord["formatted_address"];
+
+   // newCityKey = filterStringAscii(newCityKey );
+   // console.log(newCityKey);
+
+   AddObjectNoDupes(cityLookupB, newCityKey, cityRecord);
+
+}
+
+
+// ideally, I want the following lookup capability
+
+var cityBins = 
+{
+"Adelaide SA, Australia":   ["Sahil", "mom", "dad"] ,
+"Melbourne VIC, Australia": ["Craig", "Chris", "Daire"] 
+};
+
+
+
+// donorRecords    
+
+cityBins = {};
+
+// create list of people in each city:
+//    keyed by the one and only formatted_address string
+for (var key in donorRecords ) {
+
+   var donorRecord = donorRecords[key];
+
+   var cityStr = donorRecord ["city"];
+    shortName = donorRecord["name"];
+
+    // use trimmed lower case version of city for key
+    var cityStr = $.trim(cityStr );
+    cityStr = cityStr .toLowerCase();
+
+
+        if ( cityStr in cityLookupA ) {
+
+         var cityRecord = cityLookupA[cityStr];
+         // console.log(cityRecord );
+
+         formalCity = cityRecord["formatted_address"];
+
+      }
+      else {
+          console.log("city not found: '" + cityStr + "'");
+          formalCity = cityStr;
+      }
+
+
+
+    console.log(shortName, formalCity);
+
+   // create empty bin if needed
+   AddObjectNoDupes(cityBins , formalCity , []);
+
+   // add name to bin
+   cityBins[formalCity].push(shortName);
+
+}
+
+
+   // console.log(cityLookupB);
+
+
+function handleMarkerClick(marker) {
+
+     var CityString = marker.title
+        console.log(CityString);
+
+    donors = cityBins[CityString];
+        console.log(donors);
+
+        if (CityString == "unknown") {
+                CityString = "City: Other";
+        }
+
+ // "<p>" + inspStates[i].name + "<br />" + "</p>" 
+
+        //var content = "<p>";
+        var content = "<div>";
+
+  content = content + "<h1>" + CityString + "</h1>" + "<br />" 
+
+  for (var idonor in donors ) {
+      content  = content + donors[idonor] + "<br />" ;
+   }
+
+  //content  = content + "</p>";
+  content  = content + "</div>";
+
+/*
+  var infowindow = new google.maps.InfoWindow( 
+     { content: content, maxWidth: 200 }   );
+
+  infowindow.open(marker.get('map'), marker);
+*/
+
+DonorListPaneID = "main";
+var donorPane = document.getElementById(DonorListPaneID);
+donorPane.innerHTML = content;
+
+}
+
+// Enable the visual refresh
+google.maps.visualRefresh = true;
+
+var map;
+
+var markers = [];
+
+
+// --------------------- Init() function Def --------------------------
+
+function initialize() {  
+
+        var mapType = google.maps.MapTypeId.ROADMAP;
+        // mapType = google.maps.MapTypeId.HYBRID;
+
+  var mapOptions = {
+    zoom: 2,
+    center: new google.maps.LatLng(0, 0),
+    disableDefaultUI: true,
+    mapTypeId: mapType
+  };
+
+  var mapID = 'map';
+  // mapID = 'map-canvas';
+
+  map = new google.maps.Map(document.getElementById(mapID),
+      mapOptions);
+
+
+// ------------- Add Markers -------------------
+
+for (var key in cityLookupB ) {
+
+     var cityRecord = cityLookupB[key];
+
+        var lat = cityRecord["lat"];
+        var lon = cityRecord["lon"];
+
+
+        var latlon = new google.maps.LatLng(lat, lon);
+
+        var marker = new google.maps.Marker({
+                position: latlon ,
+                map: map
+            });
+
+   marker.setTitle(key);
+   google.maps.event.addListener(marker, 'click', function() {
+       handleMarkerClick(this);
+  });
+
+
+
+
+} // end loop through cities
+
+addUnknownMarker(map);
+
+}              // end init()
+// -------------------------------------------------
+
+function addUnknownMarker(map) {
+
+        var latlon = new google.maps.LatLng(0,0);
+
+        var marker = new google.maps.Marker({
+                position: latlon ,
+                map: map
+            });
+
+   marker.setTitle("unknown");
+
+   google.maps.event.addListener(marker, 'click', function() {
+       handleMarkerClick(this);
+  });
+
+// select the unknowns ..
+handleMarkerClick(marker);
+
+
+}
+
+
+
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+    </script>
+</head>
+<body>
+
+        <!--
+    <div id="map-canvas"></div>
+
+         <div id="map"></div>
+
+
+-->
+
+        <header>
+                <h2>
+                        Trade Monkey Contributors by City
+                        </h1>
+        </header>
+
+
+        <nav id="main">
+                <ul>
+                        <li>City</li>
+                </ul>
+        </nav>
+
+
+        <article>
+                <div id="map"></div>
+        </article>
+
+        <!--
+<footer><p>Donors: 166</p></footer>
+-->
+
+</body>
+
+</html>
